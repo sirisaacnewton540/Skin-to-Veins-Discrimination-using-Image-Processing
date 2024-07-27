@@ -138,13 +138,9 @@ title('Merged Image (Method 2)')
 end
 ```
 
-## Project Report
-
-For more details about the project, including hardware setup and implementation, refer to the [Project Report](path_to_report).
-
 ## Contributors
 
-**- Pushpendra Singh(Team Lead)**
+- Pushpendra Singh(Team Lead)
 - Ashutosh Kumar
 - Divyank Ranjan
 - Manish Kumar
