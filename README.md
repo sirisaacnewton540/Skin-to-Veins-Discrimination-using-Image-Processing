@@ -61,7 +61,7 @@ The Vein Finder project is designed to assist healthcare providers in locating v
     - Use the following script to capture and process up to 100 images from the camera for vein detection:
 
     ```matlab
-    cam = webcam; % Initialize the camera
+    cam = ____; % Initialize the camera (fill the place and remove the underscores)
 
     for i = 1:100
         img = snapshot(cam); % Capture an image from the camera
