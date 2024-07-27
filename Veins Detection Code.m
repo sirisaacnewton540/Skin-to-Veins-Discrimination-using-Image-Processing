@@ -1,149 +1,43 @@
-Il = imread('veins.jpg');
-Ir = imread('veins.jpg');
-IrNew = imhistmatch (Ir, Il);
-Itest = rgb2gray(Il);
-RGB =Il;
-cform2lab = makecform('srgb2lab');
-LAB = applycform(RGB, cform2lab); 
-L = LAB(:,:,1); 
-LAB(:,:,1) = adapthisteq (L, 'cliplimit',0.02, 'Distribution', 'rayleigh'); 
-cform2srgb = makecform('lab2srgb');
-J= applycform(LAB, cform2srgb);
-figure
-imshowpair (RGB, J, 'montage');
-title('Original Image VS Desired Image');
+function J = vein(img)
 
-Il = imread('veins2.jpg');
-Ir = imread('veins2.jpg');
-IrNew = imhistmatch (Ir, Il);
-Itest = rgb2gray(Il);
-RGB =Il;
-cform2lab = makecform('srgb2lab');
-LAB = applycform(RGB, cform2lab); 
-L = LAB(:,:,1); 
-LAB(:,:,1) = adapthisteq (L, 'cliplimit',0.02, 'Distribution', 'rayleigh'); 
-cform2srgb = makecform('lab2srgb');
-J= applycform(LAB, cform2srgb);
-figure
-imshowpair (RGB, J, 'montage');
-title('Original Image VS Desired Image');
+% APPLYING MEDIAN FILTERING TECHNIQUE FOR 
+%ADJUSTING BLUREDPIXELS ACCORDING
+% TO THE NEARBY PIXELS. 
+r = medfilt3(img);
 
-Il = imread('veins5.jpg');
-Ir = imread('veins5.jpg');
-IrNew = imhistmatch (Ir, Il);
-Itest = rgb2gray(Il);
-RGB =Il;
+% APPLYING CLAHE ALGORITHM.
 cform2lab = makecform('srgb2lab');
-LAB = applycform(RGB, cform2lab); 
+LAB = applycform(r, cform2lab); 
 L = LAB(:,:,1); 
 LAB(:,:,1) = adapthisteq (L, 'cliplimit',0.02, 'Distribution', 'rayleigh'); 
 cform2srgb = makecform('lab2srgb');
 J= applycform(LAB, cform2srgb);
-figure
-imshowpair (RGB, J, 'montage');
-title('Original Image VS Desired Image');
 
-Il = imread('veins10.jpg');
-Ir = imread('veins10.jpg');
-IrNew = imhistmatch (Ir, Il);
-Itest = rgb2gray(Il);
-RGB =Il;
-cform2lab = makecform('srgb2lab');
-LAB = applycform(RGB, cform2lab); 
-L = LAB(:,:,1); 
-LAB(:,:,1) = adapthisteq (L, 'cliplimit',0.02, 'Distribution', 'rayleigh'); 
-cform2srgb = makecform('lab2srgb');
-J= applycform(LAB, cform2srgb);
-figure
-imshowpair (RGB, J, 'montage');
-title('Original Image VS Desired Image');
+% PLOTTING THE PROCESSED IMAGE
+T = adaptthresh(J, 0.6);
 
-Il = imread('veins12.jpg');
-Ir = imread('veins12.jpg');
-IrNew = imhistmatch (Ir, Il);
-Itest = rgb2gray(Il);
-RGB =Il;
-cform2lab = makecform('srgb2lab');
-LAB = applycform(RGB, cform2lab); 
-L = LAB(:,:,1); 
-LAB(:,:,1) = adapthisteq (L, 'cliplimit',0.02, 'Distribution', 'rayleigh'); 
-cform2srgb = makecform('lab2srgb');
-J= applycform(LAB, cform2srgb);
-figure
-imshowpair (RGB, J, 'montage');
-title('Original Image VS Desired Image');
+%Binarization
+BW = imbinarize(J,T);  
 
-Il = imread('veins13.jpg');
-Ir = imread('veins13.jpg');
-IrNew = imhistmatch (Ir, Il);
-Itest = rgb2gray(Il);
-RGB =Il;
-cform2lab = makecform('srgb2lab');
-LAB = applycform(RGB, cform2lab); 
-L = LAB(:,:,1); 
-LAB(:,:,1) = adapthisteq (L, 'cliplimit',0.02, 'Distribution', 'rayleigh'); 
-cform2srgb = makecform('lab2srgb');
-J= applycform(LAB, cform2srgb);
-figure
-imshowpair (RGB, J, 'montage');
-title('Original Image VS Desired Image');
+%Morphing (Thinning)
+BW2 = bwmorph(BW(:,:,1),'thin');
+%Plotting
+%imshowpair(T, BW2, 'montage')
+binaryImage=BW2;
 
-Il = imread('veins14.jpg');
-Ir = imread('veins14.jpg');
-IrNew = imhistmatch (Ir, Il);
-Itest = rgb2gray(Il);
-RGB =Il;
-cform2lab = makecform('srgb2lab');
-LAB = applycform(RGB, cform2lab); 
-L = LAB(:,:,1); 
-LAB(:,:,1) = adapthisteq (L, 'cliplimit',0.02, 'Distribution', 'rayleigh'); 
-cform2srgb = makecform('lab2srgb');
-J= applycform(LAB, cform2srgb);
-figure
-imshowpair (RGB, J, 'montage');
-title('Original Image VS Desired Image');
+dist2edge=bwdist(~binaryImage);
+result = false(size(binaryImage));
+[~,ind]=max(dist2edge,[],2);
+rowSub=(1:size(result,1))';%transpose to make the shape match ind
+colSub=ind;
+linind=sub2ind(size(result), rowSub, colSub);
+result(linind)=true;
+result(~binaryImage)=false;%correct for empty lines in the image
+method2=result;
 
-Il = imread('veins15.jpg');
-Ir = imread('veins15.jpg');
-IrNew = imhistmatch (Ir, Il);
-Itest = rgb2gray(Il);
-RGB =Il;
-cform2lab = makecform('srgb2lab');
-LAB = applycform(RGB, cform2lab); 
-L = LAB(:,:,1); 
-LAB(:,:,1) = adapthisteq (L, 'cliplimit',0.02, 'Distribution', 'rayleigh'); 
-cform2srgb = makecform('lab2srgb');
-J= applycform(LAB, cform2srgb);
-figure
-imshowpair (RGB, J, 'montage');
-title('Original Image VS Desired Image');
+merged2=cat(3,binaryImage,method2,false(size(binaryImage)));
+merged2=double(merged2);
 
-Il = imread('veins16.jpg');
-Ir = imread('veins16.jpg');
-IrNew = imhistmatch (Ir, Il);
-Itest = rgb2gray(Il);
-RGB =Il;
-cform2lab = makecform('srgb2lab');
-LAB = applycform(RGB, cform2lab); 
-L = LAB(:,:,1); 
-LAB(:,:,1) = adapthisteq (L, 'cliplimit',0.02, 'Distribution', 'rayleigh'); 
-cform2srgb = makecform('lab2srgb');
-J= applycform(LAB, cform2srgb);
-figure
-imshowpair (RGB, J, 'montage');
-title('Original Image VS Desired Image');
-
-Il = imread('veins17.jpg');
-Ir = imread('veins17.jpg');
-IrNew = imhistmatch (Ir, Il);
-Itest = rgb2gray(Il);
-RGB =Il;
-cform2lab = makecform('srgb2lab');
-LAB = applycform(RGB, cform2lab); 
-L = LAB(:,:,1); 
-LAB(:,:,1) = adapthisteq (L, 'cliplimit',0.02, 'Distribution', 'rayleigh'); 
-cform2srgb = makecform('lab2srgb');
-J= applycform(LAB, cform2srgb);
-figure
-imshowpair (RGB, J, 'montage');
-title('Original Image VS Desired Image');
+imshow(merged2)
+title('merged image (method 2)')
+end
