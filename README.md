@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Vein Finder project is designed to assist healthcare providers in locating veins easily when they are not visible to the naked eye. This project uses near-infrared (NIR) imaging technology to create a map of veins and project it onto the skin. This helps in procedures such as intravenous cannulation, blood withdrawal, and administering medications, making the process more efficient and less painful for patients.
+The Skin to Veins Detection project is designed to assist healthcare providers in locating veins easily when they are not visible to the naked eye. This project uses near-infrared (NIR) imaging technology to create a map of veins and project it onto the skin. This helps in procedures such as intravenous cannulation, blood withdrawal, and administering medications, making the process more efficient and less painful for patients.
 
 ## Results
 ### Final Product
